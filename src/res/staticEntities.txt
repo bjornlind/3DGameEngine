@@ -1,0 +1,8 @@
+m;floor;plane.obj;chessboard.png
+m;tree;Lowpoly_tree_sample_triangulated.obj;Lowpoly_tree_texture.png
+e;floor;0,0,23;0,0,0;0,0,0;1000,1,1000
+e;floor;0,0,0;0,0,0;0,0,0;1000,1,1000
+e;floor;0,0,1;0,0,0;0,0,0;1000,1,1000
+e;floor;0,23,0;0,9.67,0;0,0,0;1000,1,1000
+e;floor;0,3.14,0;0,0,0;0,0,0;1000,1,1000
+e;tree;0,0,0;0,0,0;0,0,0;1,1,1

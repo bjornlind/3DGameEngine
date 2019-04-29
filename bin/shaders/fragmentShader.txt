@@ -1,0 +1,42 @@
+// Implements the Phong reflection model
+#version 400 core
+
+in vec2		pass_textureCoords;
+in vec3 	vertexNormal;
+in vec3 	toLightVector;
+in float 	toLightDistance;
+in vec3 	toCameraVector;
+
+out vec4 	outColor;
+
+// Light properties:
+uniform vec3 lightColor;
+uniform float lightIntensity;	
+uniform float ambient;
+uniform vec3 lightAttenuation;
+
+// Texture properties:
+uniform sampler2D textureSampler;
+uniform float shininess;
+uniform float reflectivity;
+
+
+void main(void){
+
+	vec4 textureColor = texture(textureSampler, pass_textureCoords);
+	
+	float attenuation = lightAttenuation.x + lightAttenuation.y * toLightDistance + lightAttenuation.z * pow(toLightDistance, 2.0);
+
+	float diffuseFactor = max( dot(vertexNormal, toLightVector), ambient );
+	vec3 diffuseColor = (diffuseFactor * lightIntensity * lightColor) / attenuation;
+	
+	vec3 fromLightVector = -toLightVector;
+	vec3 reflectedLightVector = reflect(fromLightVector, vertexNormal);
+	float specularFactor = max(dot(reflectedLightVector, toCameraVector) , 0.0);
+	specularFactor = pow(specularFactor, shininess);
+	vec3 specularColor = (specularFactor * reflectivity * lightColor) / attenuation;
+	
+	outColor = vec4(diffuseColor, 1.0) * textureColor + vec4(specularColor, 1.0) * textureColor;
+	
+
+}
